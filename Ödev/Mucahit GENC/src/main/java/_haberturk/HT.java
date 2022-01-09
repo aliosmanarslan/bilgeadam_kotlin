@@ -36,8 +36,6 @@ public class HT {
     }
 
     public String getDescription() {
-        // this.description = description;
-        // System.out.println(description);
         return description;
     }
 
