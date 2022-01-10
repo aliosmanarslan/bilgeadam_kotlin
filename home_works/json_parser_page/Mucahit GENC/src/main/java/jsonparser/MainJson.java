@@ -2,18 +2,21 @@ package jsonparser;
 
 import product.Bilgiler;
 import product.ProductData;
-
 import java.util.Scanner;
 
 public class MainJson {
-    private static int Scan(){
+    public static int Scan(){
             Scanner scanner = new Scanner(System.in);
             System.out.println("Lütfen Başlatmak İstediğiniz Değeri Giriniz (Max 10) : ");
             if (scanner.hasNextInt()){
                 int start= scanner.nextInt();
+                if (start>0 != start<=10){
+                    System.out.println("Girdiğiniz Değer Aralık Dışındadır. Lütfen Yeni Değer Giriniz");
+                    Scan();
+                }
                 return start;
             }else{
-                System.out.println("Lütfen Sayısal Değer Giriniz !!!! ");
+                System.out.println("Lütfen Sayısal Değer Giriniz ! ");
                 Scan();
                 return 0;
             }
