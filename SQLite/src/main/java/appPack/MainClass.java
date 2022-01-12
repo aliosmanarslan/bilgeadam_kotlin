@@ -1,5 +1,7 @@
 package appPack;
 
+import java.util.List;
+
 public class MainClass {
 
     public static void main(String[] args) {
@@ -17,6 +19,15 @@ public class MainClass {
 
         int uRow = db.update(4,"Kemal Bilsin", "kemal@mail.com", "12345");
         System.out.println("update : "+ uRow);
+
+        int dRow = db.delete(1);
+        System.out.println("delete : "+ dRow);
+
+        List<User> ls = db.list("");
+        ls.forEach( item -> {
+            System.out.println(item.getName());
+        });
+
 
     }
 

@@ -4,6 +4,8 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.ArrayList;
+import java.util.List;
 
 public class DB {
 
@@ -94,6 +96,62 @@ public class DB {
             close();
         }
         return 0;
+    }
+
+
+    // item delete
+    public int delete( int uid ) {
+        open();
+        try {
+
+            String sql = "delete from user where uid = ?";
+            PreparedStatement pre = conn.prepareStatement(sql);
+            pre.setInt(1, uid);
+            return pre.executeUpdate();
+
+        }catch (Exception ex) {
+            System.err.println("delete error : " + ex);
+        }finally {
+            close();
+        }
+        return 0;
+    }
+
+
+    // list
+    public List<User> list(String q) {
+        List<User> ls = new ArrayList<>();
+        open();
+        try {
+
+            String sql = "select * from user";
+            if ( !q.equals("") ) {
+                sql = "select * from user where name like ? or email like ? ";
+            }
+            PreparedStatement pre = conn.prepareStatement(sql);
+            if ( !q.equals("") ) {
+                pre.setString(1, "%"+q+"%");
+                pre.setString(2, "%"+q+"%");
+            }
+
+            ResultSet rs = pre.executeQuery();
+            while (rs.next()) {
+                int uid = rs.getInt("uid");
+                String name = rs.getString("name");
+                String email = rs.getString("email");
+                String password = rs.getString("password");
+
+                User u = new User(uid,name,email,password);
+                ls.add(u);
+            }
+
+        }catch (Exception ex) {
+            System.err.println("list Error :" + ex);
+        }finally {
+            close();
+        }
+
+        return ls;
     }
 
 
